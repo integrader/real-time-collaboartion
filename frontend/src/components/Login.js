@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-//import axios from 'axios';
+import axios from 'axios';
 
 const Login = () => {
     const [email, setEmail] = useState('');
@@ -10,24 +10,24 @@ const Login = () => {
 
     const handleLogin = async (e) => {
         e.preventDefault();
-        // try {
-        //     const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+        try {
+            const { data } = await axios.post('http://localhost:5000/api/auth/login', { email, password });
 
-        //     // Save user data in local storage
-        //     console.log(data.username)
-        //     localStorage.setItem('user', JSON.stringify({ username: data.username, token: data.token }));
+            // Save user data in local storage
+            console.log(data.username)
+            localStorage.setItem('user', JSON.stringify({ username: data.username, token: data.token }));
 
-        //     // Navigate to dashboard
-        //     navigate('/dashboard');
-        // } catch (error) {
-        //     if (error.response && error.response.data && error.response.data.message) {
-        //         setError(error.response.data.message); 
-        //         navigate('/login');
-        //     } else {
-        //         setError('An unexpected error occurred. Please try again later.');
-        //         navigate('/login');
-        //     }
-        // }
+            // Navigate to dashboard
+            navigate('/dashboard');
+        } catch (error) {
+            if (error.response && error.response.data && error.response.data.message) {
+                setError(error.response.data.message); 
+                navigate('/login');
+            } else {
+                setError('An unexpected error occurred. Please try again later.');
+                navigate('/login');
+            }
+        }
     };
 
     return (
